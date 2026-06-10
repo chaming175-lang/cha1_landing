@@ -844,6 +844,71 @@
   </section>
 
   <!-- ==========================================
+       수강후기 슬라이드 섹션
+       ========================================== -->
+  <section class="section fade-in-section" id="student-reviews" style="background-color: #4A1D96; color: #ffffff; overflow: hidden;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" style="background-color: rgba(255, 255, 255, 0.15); color: #F59E0B; border-color: rgba(255, 255, 255, 0.3);">Student Testimonials</span>
+        <h2 class="section-title" style="color: #ffffff;">실제 수강생 한 줄 후기</h2>
+        <p class="section-desc" style="color: rgba(255, 255, 255, 0.85);">교육에 직접 참여하신 학생 분들의 생생하고 따뜻한 변화의 기록입니다.</p>
+      </div>
+
+      <div class="slider-wrapper-outer">
+        <button class="slider-arrow prev-arrow" id="slider-prev" aria-label="이전 후기">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <div class="slider-container">
+          <div class="slider-track" id="slider-track">
+            
+            <!-- 후기 1 -->
+            <div class="slide-card">
+              <div class="slide-stars">★★★★★</div>
+              <p class="slide-content">"컴퓨터를 잘 몰라도 선생님이 하나하나 알려주셔서 저도 할 수 있었어요!"</p>
+              <h4 class="slide-name">김○○ <span class="slide-age">(50대 주부)</span></h4>
+            </div>
+
+            <!-- 후기 2 -->
+            <div class="slide-card">
+              <div class="slide-stars">★★★★★</div>
+              <p class="slide-content">"AI로 홍보 콘텐츠 만드는 법을 배우고 나서 매출이 달라졌어요."</p>
+              <h4 class="slide-name">이○○ <span class="slide-age">(소상공인)</span></h4>
+            </div>
+
+            <!-- 후기 3 -->
+            <div class="slide-card">
+              <div class="slide-stars">★★★★★</div>
+              <p class="slide-content">"랜딩페이지 직접 만들어서 강사 브랜드를 시작할 수 있었어요!"</p>
+              <h4 class="slide-name">박○○ <span class="slide-age">(예비강사)</span></h4>
+            </div>
+
+            <!-- 후기 4 -->
+            <div class="slide-card">
+              <div class="slide-stars">★★★★★</div>
+              <p class="slide-content">"유튜브 채널 개설부터 운영까지 체계적으로 배울 수 있었습니다."</p>
+              <h4 class="slide-name">최○○ <span class="slide-age">(직장인)</span></h4>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="slider-arrow next-arrow" id="slider-next" aria-label="다음 후기">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- 슬라이더 인디케이터 점(dots) -->
+      <div class="slider-dots" id="slider-dots">
+        <span class="slider-dot active" data-index="0"></span>
+        <span class="slider-dot" data-index="1"></span>
+        <span class="slider-dot" data-index="2"></span>
+        <span class="slider-dot" data-index="3"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
        11. 문의 및 신청 섹션 (CTA)
        ========================================== -->
   <section class="section contact-section fade-in-section" id="inquiry">
@@ -967,9 +1032,30 @@
     <a href="[구글폼 링크 입력]" class="btn btn-primary" target="_blank">
       <i class="fa-solid fa-file-signature"></i> 강의 문의
     </a>
-    <a href="[카카오톡 링크 입력]" class="btn btn-secondary" target="_blank" style="background-color: #fee500; color: #3a1d1d; border-color: #fee500;">
+    <a href="https://open.kakao.com/o/sqHmmNPe" class="btn btn-secondary" target="_blank" style="background-color: #fee500; color: #3a1d1d; border-color: #fee500;">
       <i class="fa-solid fa-comment"></i> 카카오 상담
     </a>
+  </div>
+
+  <!-- 우측 하단 플로팅 버튼 그룹 (카카오 상담 & 글씨 크기 조절) -->
+  <div class="floating-group">
+    <!-- 카카오 상담 플로팅 버튼 -->
+    <div class="kakao-floating-container">
+      <div class="kakao-tooltip" id="kakao-tooltip">
+        상담하기
+        <span class="tooltip-close" id="tooltip-close">&times;</span>
+      </div>
+      <a href="https://open.kakao.com/o/sqHmmNPe" target="_blank" class="kakao-floating-btn" aria-label="카카오톡 1:1 상담">
+        <i class="fa-solid fa-comment"></i>
+        <span class="kakao-btn-text">카카오 상담</span>
+      </a>
+    </div>
+
+    <!-- 글씨 크기 조절 버튼 (A-/A+) -->
+    <div class="font-zoom-container">
+      <button class="zoom-btn zoom-out" id="zoom-out" title="글씨 축소">A-</button>
+      <button class="zoom-btn zoom-in" id="zoom-in" title="글씨 확대">A+</button>
+    </div>
   </div>
 
   <script src="./script.js"></script>
