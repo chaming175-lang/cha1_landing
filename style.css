@@ -41,6 +41,7 @@
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --header-height: 80px;
+  --font-scale: 1.0; /* 글씨 크기 조절 배율 */
 }
 
 /* 기본 스타일 초기화 */
@@ -56,7 +57,7 @@ body {
   background-color: var(--color-white);
   color: var(--color-text-dark);
   line-height: 1.6;
-  font-size: 18px;
+  font-size: calc(18px * var(--font-scale, 1.0));
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
@@ -1745,4 +1746,278 @@ img {
   opacity: 1;
   transform: none;
   visibility: visible;
+}
+
+/* ==========================================
+   우측 하단 플로팅 버튼 그룹 스타일
+   ========================================== */
+.floating-group {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px; /* 카카오 버튼과 글씨 크기 조절 버튼 사이 10px 간격 */
+}
+
+/* 카카오 플로팅 컨테이너 */
+.kakao-floating-container {
+  position: relative;
+  display: inline-flex;
+}
+
+/* 카카오 플로팅 버튼 */
+.kakao-floating-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  min-width: 56px;
+  padding: 0 18px;
+  background-color: #FEE500;
+  color: #3A1D1D;
+  font-weight: 800;
+  font-size: 15px;
+  border-radius: var(--border-radius-pill);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  gap: 8px;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.kakao-floating-btn i {
+  font-size: 20px;
+}
+
+.kakao-floating-btn:hover {
+  transform: scale(1.08); /* 호버 시 살짝 커지는 효과 */
+  box-shadow: 0 6px 20px rgba(74, 29, 150, 0.25);
+}
+
+/* 카카오 안내 말풍선 (Tooltip) */
+.kakao-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 10px;
+  background-color: #3A1D1D;
+  color: #FFFFFF;
+  padding: 8px 14px 8px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  z-index: 1002;
+  cursor: pointer; /* 클릭하면 닫히므로 포인터 커서 */
+}
+
+.kakao-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 18px;
+  border: 6px solid transparent;
+  border-top-color: #3A1D1D;
+}
+
+.kakao-tooltip.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.tooltip-close {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.tooltip-close:hover {
+  color: #FFFFFF;
+}
+
+/* 글씨 확대/축소 버튼 컨테이너 (A-/A+) */
+.font-zoom-container {
+  display: flex;
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 4px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(74, 29, 150, 0.08);
+  border: 1px solid rgba(124, 58, 237, 0.1);
+}
+
+.zoom-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background-color: #FFFFFF;
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.zoom-btn:hover {
+  background: var(--gradient-primary);
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+/* 모바일 해상도 대응 */
+@media (max-width: 768px) {
+  .floating-group {
+    bottom: 84px; /* 모바일 하단 CTA 바와 겹치지 않게 위로 올림 */
+    right: 16px;
+  }
+}
+
+/* ==========================================
+   수강후기 슬라이드 섹션 스타일
+   ========================================== */
+.slider-wrapper-outer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+.slider-container {
+  overflow: hidden;
+  width: 100%;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  width: 100%;
+}
+
+.slide-card {
+  flex: 0 0 100%;
+  width: 100%;
+  background-color: var(--color-white);
+  padding: 50px 40px;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide-stars {
+  color: #F59E0B; /* 골드 #F59E0B */
+  font-size: 26px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.slide-content {
+  font-size: calc(22px * var(--font-scale, 1.0));
+  font-weight: 700;
+  line-height: 1.6;
+  margin-bottom: 25px;
+  color: var(--color-primary); /* 내용 딥퍼플 */
+  word-break: keep-all;
+}
+
+.slide-name {
+  font-size: calc(18px * var(--font-scale, 1.0));
+  font-weight: 800;
+  color: var(--color-primary); /* 이름 딥퍼플 */
+}
+
+.slide-age {
+  font-weight: 500;
+  font-size: calc(15px * var(--font-scale, 1.0));
+  color: var(--color-text-muted);
+}
+
+/* 슬라이더 화살표 */
+.slider-arrow {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.slider-arrow:hover {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  border-color: var(--color-white);
+  transform: scale(1.1);
+}
+
+/* 슬라이더 인디케이터 점 */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.slider-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.slider-dot.active {
+  background-color: #F59E0B; /* 액티브 점 골드 */
+  transform: scale(1.3);
+}
+
+/* 모바일 전용 반응형 레이아웃 조절 */
+@media (max-width: 600px) {
+  .slider-wrapper-outer {
+    gap: 8px;
+  }
+  
+  .slider-arrow {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .slide-card {
+    padding: 35px 20px;
+  }
+  
+  .slide-content {
+    font-size: calc(18px * var(--font-scale, 1.0));
+  }
 }

@@ -202,4 +202,140 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typingTextContainer) {
     typeText();
   }
+
+  // ==========================================
+  // 9. 카카오 플로팅 상담 버튼 안내 말풍선 (Tooltip) 제어
+  // ==========================================
+  const kakaoTooltip = document.getElementById('kakao-tooltip');
+  if (kakaoTooltip) {
+    // 페이지 로드 3초 후 말풍선 표시
+    setTimeout(() => {
+      kakaoTooltip.classList.add('show');
+    }, 3000);
+
+    // 말풍선 클릭 시 닫힘 처리
+    kakaoTooltip.addEventListener('click', (e) => {
+      kakaoTooltip.classList.remove('show');
+    });
+  }
+
+  // ==========================================
+  // 10. 글씨 크기 조절 (A-/A+) 동적 스케일링 제어
+  // ==========================================
+  const zoomInBtn = document.getElementById('zoom-in');
+  const zoomOutBtn = document.getElementById('zoom-out');
+  let currentFontScale = 1.0; // 기본 스케일값 100%
+
+  if (zoomInBtn && zoomOutBtn) {
+    // 글씨 확대 (최대 140%까지 확대 제한)
+    zoomInBtn.addEventListener('click', () => {
+      if (currentFontScale < 1.4) {
+        currentFontScale += 0.1;
+        document.documentElement.style.setProperty('--font-scale', currentFontScale.toFixed(1));
+      }
+    });
+
+    // 글씨 축소 (최소 80%까지 축소 제한)
+    zoomOutBtn.addEventListener('click', () => {
+      if (currentFontScale > 0.8) {
+        currentFontScale -= 0.1;
+        document.documentElement.style.setProperty('--font-scale', currentFontScale.toFixed(1));
+      }
+    });
+  }
+
+  // ==========================================
+  // 11. 수강후기 슬라이더 (순수 JS 구현)
+  // ==========================================
+  const sliderTrack = document.getElementById('slider-track');
+  const sliderPrev = document.getElementById('slider-prev');
+  const sliderNext = document.getElementById('slider-next');
+  const sliderDots = document.querySelectorAll('#slider-dots .slider-dot');
+  const slideCards = document.querySelectorAll('#slider-track .slide-card');
+  
+  let currentSlide = 0;
+  const totalSlides = slideCards.length;
+  let autoSlideInterval;
+
+  // 특정 슬라이드로 이동하는 핵심 함수
+  function goToSlide(index) {
+    if (index < 0) {
+      currentSlide = totalSlides - 1;
+    } else if (index >= totalSlides) {
+      currentSlide = 0;
+    } else {
+      currentSlide = index;
+    }
+    
+    // 슬라이드 트랙 이동 처리
+    if (sliderTrack) {
+      sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+    
+    // 인디케이터 점(dots) 상태 동기화
+    sliderDots.forEach((dot, dotIdx) => {
+      if (dotIdx === currentSlide) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  // 자동 슬라이드 시작 함수 (3초 간격)
+  function startAutoSlide() {
+    stopAutoSlide(); // 중복 방지
+    autoSlideInterval = setInterval(() => {
+      goToSlide(currentSlide + 1);
+    }, 3000);
+  }
+
+  // 자동 슬라이드 정지 함수
+  function stopAutoSlide() {
+    if (autoSlideInterval) {
+      clearInterval(autoSlideInterval);
+    }
+  }
+
+  // 사용자 수동 조작 시 자동 롤링 타이머 리셋
+  function resetAutoSlideTimer() {
+    stopAutoSlide();
+    startAutoSlide();
+  }
+
+  // 좌우 화살표 버튼 이벤트 바인딩
+  if (sliderPrev) {
+    sliderPrev.addEventListener('click', () => {
+      goToSlide(currentSlide - 1);
+      resetAutoSlideTimer();
+    });
+  }
+
+  if (sliderNext) {
+    sliderNext.addEventListener('click', () => {
+      goToSlide(currentSlide + 1);
+      resetAutoSlideTimer();
+    });
+  }
+
+  // 하단 점(dots) 클릭 이벤트 바인딩
+  sliderDots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      const targetIndex = parseInt(e.target.getAttribute('data-index'), 10);
+      goToSlide(targetIndex);
+      resetAutoSlideTimer();
+    });
+  });
+
+  // 슬라이더 영역 마우스 진입 시 일시정지, 이탈 시 다시 시작
+  const sliderContainer = document.querySelector('.slider-container');
+  if (sliderContainer) {
+    sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+    sliderContainer.addEventListener('mouseleave', startAutoSlide);
+  }
+
+  // 초기 시작
+  if (totalSlides > 0) {
+    startAutoSlide();
+  }
 });
